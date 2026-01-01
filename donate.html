@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Donate Food | FoodLink</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #14532d, #1f8f4c);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.container {
+  width: 90%;
+  max-width: 900px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  text-align: center;
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.food-card {
+  background: rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.25s;
+}
+
+.food-card.selected {
+  border-color: #22c55e;
+  background: rgba(34,197,94,0.25);
+}
+
+.food-card span {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.food-list {
+  background: rgba(255,255,255,0.12);
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+
+.food-item {
+  display: grid;
+  grid-template-columns: 1fr 120px 80px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.food-item input {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+}
+
+.food-item button {
+  background: #ef4444;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  color: white;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form input {
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  font-size: 15px;
+}
+
+button.submit {
+  grid-column: span 2;
+  margin-top: 10px;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: #22c55e;
+  color: #064e3b;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.submit:hover {
+  background: #16a34a;
+}
+
+.message {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  color: #dcfce7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🍽️ Donate Surplus Food</h1>
+  <div class="subtitle">Select all available food items in the mess</div>
+
+  <div class="food-grid">
+    <div class="food-card" onclick="toggleFood(this,'Rice')"><span>🍚</span>Rice</div>
+    <div class="food-card" onclick="toggleFood(this,'Dal')"><span>🥣</span>Dal</div>
+    <div class="food-card" onclick="toggleFood(this,'Sabzi')"><span>🥦</span>Sabzi</div>
+    <div class="food-card" onclick="toggleFood(this,'Roti')"><span>🫓</span>Roti</div>
+    <div class="food-card" onclick="toggleFood(this,'Sweets')"><span>🍰</span>Sweets</div>
+    <div class="food-card" onclick="toggleFood(this,'Other')"><span>🍲</span>Other</div>
+  </div>
+
+  <div class="food-list" id="foodList" style="display:none"></div>
+
+  <div class="form">
+    <input id="fresh" type="number" placeholder="Food fresh for (hours)" min="1">
+    <input id="college" placeholder="College / Mess Name">
+    <button class="submit" onclick="submitFood()">Notify NGOs</button>
+  </div>
+
+  <div class="message" id="msg"></div>
+</div>
+
+<script>
+let selectedFoods = {};
+
+function toggleFood(card, food) {
+  if (selectedFoods[food] !== undefined) {
+    delete selectedFoods[food];
+    card.classList.remove("selected");
+  } else {
+    selectedFoods[food] = "";
+    card.classList.add("selected");
+  }
+  renderFoods();
+}
+
+function renderFoods() {
+  const list = document.getElementById("foodList");
+  list.innerHTML = "";
+
+  const keys = Object.keys(selectedFoods);
+  if (keys.length === 0) {
+    list.style.display = "none";
+    return;
+  }
+
+  list.style.display = "block";
+
+  keys.forEach(food => {
+    const div = document.createElement("div");
+    div.className = "food-item";
+    div.innerHTML = `
+      <strong>${food}</strong>
+      <input type="number" placeholder="kg" min="0.5" step="0.5"
+        onchange="selectedFoods['${food}']=this.value">
+      <button onclick="removeFood('${food}')">Remove</button>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function removeFood(food) {
+  delete selectedFoods[food];
+  document.querySelectorAll(".food-card").forEach(c => {
+    if (c.innerText.includes(food)) c.classList.remove("selected");
+  });
+  renderFoods();
+}
+
+function submitFood() {
+  if (!college.value || !fresh.value || Object.keys(selectedFoods).length === 0) {
+    alert("Please complete all details");
+    return;
+  }
+
+  document.getElementById("msg").innerText =
+    "✅ NGOs notified. Pickup will be arranged shortly. Thank you ❤️";
+}
+</script>
+
+</body>
+</html>

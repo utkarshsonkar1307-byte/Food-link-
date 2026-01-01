@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Food Connect | Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --green: #2f9e44;
+      --dark: #1f2937;
+      --light: #f9fafb;
+      --card: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #2f9e44, #1c7c54);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-card {
+      background: var(--card);
+      width: 380px;
+      padding: 32px;
+      border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo h1 {
+      margin: 0;
+      color: var(--green);
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .logo p {
+      margin-top: 6px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark);
+      display: block;
+      margin-top: 16px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border-radius: 10px;
+      border: 1.5px solid #d1d5db;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--green);
+    }
+
+    .role-box {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .role {
+      flex: 1;
+      padding: 14px;
+      text-align: center;
+      border-radius: 12px;
+      border: 2px solid #e5e7eb;
+      cursor: pointer;
+      font-weight: 600;
+      color: #374151;
+      transition: 0.2s;
+    }
+
+    .role.active {
+      border-color: var(--green);
+      background: #e6f4ea;
+      color: var(--green);
+    }
+
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: var(--green);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #237a35;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-card">
+    <div class="logo">
+      <h1>🍽 Food Connect</h1>
+      <p>Connecting Mess Surplus to NGOs</p>
+    </div>
+
+    <label>Email or Mobile Number</label>
+    <input id="userInput" type="text" placeholder="example@email.com or 9876543210" />
+
+    <label>Select Role</label>
+    <div class="role-box">
+      <div class="role active" id="messRole" onclick="selectRole('mess')">🏫 Mess</div>
+      <div class="role" id="ngoRole" onclick="selectRole('ngo')">🤝 NGO</div>
+    </div>
+
+    <button onclick="login()">Continue</button>
+
+    <div class="footer">
+      Reducing food waste • One meal at a time ❤️
+    </div>
+  </div>
+
+  <script>
+    let selectedRole = "mess";
+
+    function selectRole(role) {
+      selectedRole = role;
+      document.getElementById("messRole").classList.remove("active");
+      document.getElementById("ngoRole").classList.remove("active");
+
+      if (role === "mess") {
+        document.getElementById("messRole").classList.add("active");
+      } else {
+        document.getElementById("ngoRole").classList.add("active");
+      }
+    }
+
+    function login() {
+      const value = document.getElementById("userInput").value.trim();
+
+      if (!value) {
+        alert("Please enter email or mobile number");
+        return;
+      }
+
+      // simple role-based redirect
+      if (selectedRole === "mess") {
+        window.location.href = "donate.html";
+      } else {
+        window.location.href = "ngo.html";
+      }
+    }
+  </script>
+
+</body>
+</html>

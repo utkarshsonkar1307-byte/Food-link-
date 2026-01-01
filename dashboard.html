@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NGO Dashboard | FoodLink</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #1e293b, #334155);
+  min-height: 100vh;
+  color: #fff;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  opacity: 0.85;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: rgba(255,255,255,0.12);
+  padding: 25px;
+  border-radius: 18px;
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.food {
+  margin: 8px 0;
+}
+
+button {
+  margin-top: 15px;
+  padding: 14px;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  background: #22c55e;
+  color: #064e3b;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #16a34a;
+}
+
+.confirm {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+  color: #dcfce7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🤝 NGO Pickup Dashboard</h1>
+  <div class="subtitle">Available food ready for collection</div>
+
+  <div class="card">
+    <h3>🏫 ABC Engineering College</h3>
+    <div class="food">🍚 Rice — 25 kg</div>
+    <div class="food">🥣 Dal — 15 kg</div>
+    <div class="food">🥦 Sabzi — 10 kg</div>
+    <div class="food">⏱ Fresh for: 3 hours</div>
+
+    <button onclick="accept()">Accept Pickup</button>
+  </div>
+
+  <div class="confirm" id="confirm"></div>
+</div>
+
+<script>
+function accept() {
+  document.getElementById("confirm").innerText =
+    "✅ Pickup confirmed. Please proceed to the mess location 🚐";
+}
+</script>
+
+</body>
+</html>
